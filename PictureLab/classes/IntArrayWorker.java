@@ -99,6 +99,64 @@ public class IntArrayWorker
     }
   }
   
+  /**
+  * An example of a method - replace this comment with your own   *  that describes the operation of the method
+  *
+  * @pre     preconditions for the method
+  *          (what the method assumes about the method's parameters and class's state)
+  * @post    postconditions for the method
+  *          (what the method guarantees upon completion)
+  * @param   y   description of parameter y
+  * @return  description of the return value
+  */
+  public int getCount(int number)
+    {
+        // put your code here
+        int total = 0;
+        for (int row = 0; row < matrix.length; row++)
+        {
+            for (int col = 0; col < matrix[0].length; col++)
+            {
+                if (matrix[row][col] == number)
+                {
+                    total += 1;
+                }
+            }
+        }
+        
+        return total;
+    }
+
+  /**
+  * An example of a method - replace this comment with your own
+  *  that describes the operation of the method
+  *
+  * @pre     preconditions for the method
+  *          (what the method assumes about the method's parameters and class's state)
+  * @post    postconditions for the method
+  *          (what the method guarantees upon completion)
+  * @param   y   description of parameter y
+  * @return  description of the return value
+  */
+  public int getLargest()
+    {
+        // put your code here
+        int largest = 0;
+        
+        for (int row = 0; row < matrix.length; row++)
+        {
+            for (int col = 0; col < matrix[0].length; col++)
+            {
+                if (matrix[row][col] > largest)
+                {
+                    largest = matrix[row][col];
+                }
+            }
+        }
+        
+        return largest;
+    }
+
     /**
      * An example of a method - replace this comment with your own
      *  that describes the operation of the method
@@ -110,12 +168,17 @@ public class IntArrayWorker
      * @param   y   description of parameter y
      * @return  description of the return value
      */
-    public int getCount(
-    )
+    public int getColTotal(int column)
     {
         // put your code here
+        int total = 0;
         
+        for (int i = 0; i < matrix[0].length; i++)
+        {
+            total += matrix[i][column];
+        }
+        
+        return total;
     }
 
- 
 }

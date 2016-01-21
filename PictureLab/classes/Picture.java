@@ -85,7 +85,42 @@ public class Picture extends SimplePicture
     
   }
   
-  /** Method to set the blue to 0 */
+
+    /**
+     * An example of a method - replace this comment with your own
+     *  that describes the operation of the method
+     *
+     * @pre     preconditions for the method
+     *          (what the method assumes about the method's parameters and class's state)
+     * @post    postconditions for the method
+     *          (what the method guarantees upon completion)
+     * @param   y   description of parameter y
+     * @return  description of the return value
+     */
+    public void cropAndCopy(Picture sourcePicture, int startSourceRow, int endSourceRow, int startSourceCol,
+     int endSourceCol, int startDestRow, int startDestCol)
+    {
+        // put your code here
+        Pixel[][] sourcepixels = sourcePicture.getPixels2D();
+        Pixel[][] destpixels = this.getPixels2D();
+        
+        int destrow = startDestRow;
+        int destcol = startDestCol;
+        
+        for (int row = startSourceRow; row <= endSourceRow; row++)
+        {
+            for (int col = startSourceCol; col <= endSourceCol; col++)
+            {
+                destpixels[destrow][destcol].setColor(sourcepixels[row][col].getColor());
+                destcol++;
+            }
+            
+            destcol = 0;
+            destrow++;
+        }
+    }
+
+    /** Method to set the blue to 0 */
   public void zeroBlue()
   {
     Pixel[][] pixels = this.getPixels2D();
@@ -94,6 +129,20 @@ public class Picture extends SimplePicture
       for (Pixel pixelObj : rowArray)
       {
         pixelObj.setBlue(0);
+      }
+    }
+  }
+  
+  /** Method to set the green and red to 0 and keeps the blue the same*/
+  public void keepOnlyBlue()
+  {
+    Pixel[][] pixels = this.getPixels2D();
+    for (Pixel[] rowArray : pixels)
+    {
+      for (Pixel pixelObj : rowArray)
+      {
+        pixelObj.setGreen(0);
+        pixelObj.setRed(0);
       }
     }
   }
@@ -176,18 +225,18 @@ public class Picture extends SimplePicture
   /** Method to create a collage of several pictures */
   public void createCollage()
   {
-    Picture flower1 = new Picture("flower1.jpg");
-    Picture flower2 = new Picture("flower2.jpg");
-    this.copy(flower1,0,0);
-    this.copy(flower2,100,0);
-    this.copy(flower1,200,0);
-    Picture flowerNoBlue = new Picture(flower2);
-    flowerNoBlue.zeroBlue();
-    this.copy(flowerNoBlue,300,0);
-    this.copy(flower1,400,0);
-    this.copy(flower2,500,0);
-    this.mirrorVertical();
-    this.write("collage.jpg");
+      Picture astronaut = new Picture("Astronaut-in-India.jpg");
+      Picture astronaut2 = new Picture("Astronaut-in-India.jpg");
+      
+      this.copy(astronaut,0,0);
+      astronaut.mirrorVertical();
+      this.copy(astronaut,0,550);
+      astronaut.keepOnlyBlue();
+      this.copy(astronaut,365,0);
+      astronaut2.zeroBlue();
+      astronaut2.mirrorHorizontal();
+      this.copy(astronaut2,365,550);
+      this.write("collage.jpg");
   }
   
   
@@ -217,16 +266,104 @@ public class Picture extends SimplePicture
     }
   }
   
+
+    /**
+     * An example of a method - replace this comment with your own
+     *  that describes the operation of the method
+     *
+     * @pre     preconditions for the method
+     *          (what the method assumes about the method's parameters and class's state)
+     * @post    postconditions for the method
+     *          (what the method guarantees upon completion)
+     * @param   y   description of parameter y
+     * @return  description of the return value
+     */
+    public void mirrorVerticalRightToLeft()
+    {
+        // put your code here
+        Pixel[][] pixels = this.getPixels2D();
+        Pixel leftPixel = null;
+        Pixel rightPixel = null;
+        int width = pixels[0].length;
+        for (int row = 0; row < pixels.length; row++)
+        {
+            for (int col = 0; col < width / 2; col++)
+            {
+                leftPixel = pixels[row][col];
+                rightPixel = pixels[row][width-1-col];
+                leftPixel.setColor(rightPixel.getColor());
+            }
+        }
+    }
   
+    /**
+     * An example of a method - replace this comment with your own
+     *  that describes the operation of the method
+     *
+     * @pre     preconditions for the method
+     *          (what the method assumes about the method's parameters and class's state)
+     * @post    postconditions for the method
+     *          (what the method guarantees upon completion)
+     * @param   y   description of parameter y
+     * @return  description of the return value
+     */
+    public void mirrorHorizontal()
+    {
+        // put your code here
+        Pixel[][] pixels = this.getPixels2D();
+        Pixel topPixel = null;
+        Pixel bottomPixel = null;
+        int height = pixels.length;
+        for (int row = 0; row < height / 2; row++)
+        {
+            for (int col = 0; col < pixels[0].length; col++)
+            {
+                topPixel = pixels[row][col];
+                bottomPixel = pixels[height-1-row][col];
+                bottomPixel.setColor(topPixel.getColor());
+            }
+        }
+    }
+
+    /**
+     * An example of a method - replace this comment with your own
+     *  that describes the operation of the method
+     *
+     * @pre     preconditions for the method
+     *          (what the method assumes about the method's parameters and class's state)
+     * @post    postconditions for the method
+     *          (what the method guarantees upon completion)
+     * @param   y   description of parameter y
+     * @return  description of the return value
+     */
+    public void mirrorHorizontalBotToTop()
+    {
+        // put your code here
+        Pixel[][] pixels = this.getPixels2D();
+        Pixel topPixel = null;
+        Pixel bottomPixel = null;
+        int height = pixels.length;
+        for (int row = 0; row < height / 2; row++)
+        {
+            for (int col = 0; col < pixels[0].length; col++)
+            {
+                topPixel = pixels[row][col];
+                bottomPixel = pixels[height-1-row][col];
+                topPixel.setColor(bottomPixel.getColor());
+            }
+        }
+    }
+
+    
   /* Main method for testing - each class in Java can have a main 
    * method 
    */
   public static void main(String[] args) 
   {
-    Picture beach = new Picture("beach.jpg");
-    beach.explore();
-    beach.zeroBlue();
-    beach.explore();
+    Picture astronaut = new Picture("Astronaut-in-India.jpg");
+    astronaut.explore();
+    astronaut.createCollage();
+    astronaut.explore();
   }
   
 } // this } is the end of class Picture, put all new methods before this
