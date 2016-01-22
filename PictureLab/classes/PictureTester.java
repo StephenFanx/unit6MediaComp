@@ -17,6 +17,42 @@ public class PictureTester
     beach.explore();
   }
   
+    /** Method to test negate */
+  public static void testNegate()
+  {
+    Picture astronaut = new Picture("astronaut.jpg");
+    astronaut.explore();
+    astronaut.negate();
+    astronaut.explore();
+  }
+  
+      /** Method to test mirrorGull */
+  public static void testGrayScale()
+  {
+    Picture seagull = new Picture("seagull.jpg");
+    seagull.explore();
+    seagull.grayscale();
+    seagull.explore();
+  }
+  
+    /** Method to test mirrorGull */
+  public static void testMirrorGull()
+  {
+    Picture seagull = new Picture("seagull.jpg");
+    seagull.explore();
+    seagull.mirrorGull();
+    seagull.explore();
+  }
+  
+  /** Method to test mirrorArms */
+  public static void testMirrorArms()
+  {
+    Picture snowman = new Picture("snowman.jpg");
+    snowman.explore();
+    snowman.mirrorArms();
+    snowman.explore();
+  }
+  
   /** Method to test mirrorVertical */
   public static void testMirrorVertical()
   {

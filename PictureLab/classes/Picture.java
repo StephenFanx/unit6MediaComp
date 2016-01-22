@@ -147,6 +147,39 @@ public class Picture extends SimplePicture
     }
   }
   
+  /** Method to negate all the pixels in a picture*/
+  public void negate()
+  {
+    Pixel[][] pixels = this.getPixels2D();
+    for (Pixel[] rowArray : pixels)
+    {
+      for (Pixel pixelObj : rowArray)
+      {
+        pixelObj.setGreen(255 - pixelObj.getGreen());
+        pixelObj.setRed(255 - pixelObj.getRed());
+        pixelObj.setBlue(255 - pixelObj.getBlue());
+      }
+    }
+  }
+  
+    /** Method to change the colors of the picture into shades of gray*/
+  public void grayscale()
+  {
+    Pixel[][] pixels = this.getPixels2D();
+    
+    for (Pixel[] rowArray : pixels)
+    {
+      for (Pixel pixelObj : rowArray)
+      {
+        int average = (pixelObj.getGreen() + pixelObj.getBlue() + pixelObj.getRed())/3;
+        
+        pixelObj.setGreen(average);
+        pixelObj.setRed(average);
+        pixelObj.setBlue(average);
+      }
+    }
+  }
+  
   /** Method that mirrors the picture around a 
     * vertical mirror in the center of the picture
     * from left to right */
@@ -187,10 +220,60 @@ public class Picture extends SimplePicture
         rightPixel = pixels[row]                       
                          [mirrorPoint - col + mirrorPoint];
         rightPixel.setColor(leftPixel.getColor());
+        count++;
       }
     }
+    
+    System.out.println(count);
   }
   
+    /** Method that mirrors the arms of a snowman
+    * so that it has 4 arms*/
+  public void mirrorArms()
+    {
+        // put your code here
+        Pixel[][] pixels = this.getPixels2D();
+        Pixel topPixel1 = null;
+        Pixel bottomPixel1 = null;
+        Pixel topPixel2 = null;
+        Pixel bottomPixel2 = null;
+        int height = pixels.length;
+        int width = pixels[0].length;
+        
+        for (int row = 160; row < 220; row++)
+        {
+            for (int col = 20; col < 170; col++)
+            {
+                topPixel1 = pixels[row][col];
+                bottomPixel1 = pixels[(height - 160)/2 + row][col];
+                bottomPixel1.setColor(topPixel1.getColor());
+                
+                topPixel2 = pixels[row][col + 220];
+                bottomPixel2 = pixels[(height - 160)/2 + row][col + 220];
+                bottomPixel2.setColor(topPixel2.getColor());
+            }
+        }
+    }
+  
+        /** Method that mirrors a seagull on a picture so that there are 2*/
+  public void mirrorGull()
+    {
+        // put your code here
+        Pixel[][] pixels = this.getPixels2D();
+        Pixel leftPixel = null;
+        Pixel rightPixel = null;
+        
+        for (int row = 235; row < 320; row++)
+        {
+            for (int col = 235; col < 340; col++)
+            {
+                leftPixel = pixels[row][col];
+                rightPixel = pixels[row][col + 100];
+                rightPixel.setColor(leftPixel.getColor());
+            }
+        }
+    }
+    
   /** copy from the passed fromPic to the
     * specified startRow and startCol in the
     * current picture
@@ -360,10 +443,10 @@ public class Picture extends SimplePicture
    */
   public static void main(String[] args) 
   {
-    Picture astronaut = new Picture("Astronaut-in-India.jpg");
-    astronaut.explore();
-    astronaut.createCollage();
-    astronaut.explore();
+    Picture snowman = new Picture("snowman.jpg");
+    snowman.explore();
+    snowman.mirrorArms();
+    snowman.explore();
   }
   
 } // this } is the end of class Picture, put all new methods before this
